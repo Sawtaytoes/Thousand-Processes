@@ -34,7 +34,7 @@ export const updateNode = (
 const numberOfColumns = 100
 
 const initialState = (
-	Array(1000)
+	Array(8000)
 	.fill()
 	.map((
 		item,
@@ -43,8 +43,8 @@ const initialState = (
 		color: 'black',
 		id: index,
 		value: '0',
-		x: Math.floor(index / numberOfColumns),
-		y: index % numberOfColumns,
+		x: index % numberOfColumns,
+		y: Math.floor(index / numberOfColumns),
 	}))
 )
 
