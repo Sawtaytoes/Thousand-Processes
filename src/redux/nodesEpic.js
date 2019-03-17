@@ -1,40 +1,9 @@
-import { bufferTime, delay, filter, ignoreElements, map, mapTo, mergeAll, mergeMap, startWith, switchMap, take, tap } from 'rxjs/operators'
-import { merge, Subject, timer } from 'rxjs'
+import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, startWith, switchMap, take } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
+import { timer } from 'rxjs'
 
 import getRandomWholeNumber from './getRandomWholeNumber'
 import { UPDATE_NODE, updateNode } from './nodesReducer'
-
-// const colors = [
-// 	'#000',
-// 	'#00f',
-// 	'#0f0',
-// 	'#0ff',
-// 	'#f00',
-// 	'#f0f',
-// 	'#ff0',
-// 	'#fff',
-// ]
-
-const getRandomColor = () => (
-	'rgb'
-	.concat('(')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(')')
-	// colors[getRandomWholeNumber(8)]
-)
-
-const getRandomValue = () => (
-	getRandomWholeNumber(
-		10,
-	)
-)
-
-const render$ = new Subject()
 
 const nodesEpic = (
 	action$,
@@ -59,10 +28,9 @@ const nodesEpic = (
 		mergeMap(({
 			id,
 		}) => (
-			// action$
-			render$
+			action$
 			.pipe(
-				// ofType(UPDATE_NODE),
+				ofType(UPDATE_NODE),
 				filter(({
 					id: updatedNodeId,
 				}) => (
@@ -83,21 +51,7 @@ const nodesEpic = (
 		)),
 		bufferTime(40),
 		mergeAll(),
-		// tap(console.log),
-		// map(updateNode),
-		tap(id => {
-			const cell = (
-				document
-				.getElementById(`cell-${id}`)
-			)
-
-			cell.innerHTML = getRandomValue()
-			cell.style.color = getRandomColor()
-
-			render$
-			.next({ id })
-		}),
-		ignoreElements(),
+		map(updateNode),
 	)
 )
 
