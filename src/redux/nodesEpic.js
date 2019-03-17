@@ -81,10 +81,7 @@ const nodesEpic = (
 				mapTo(id),
 			)
 		)),
-		// delay(0),
 		bufferTime(40),
-		// bufferTime(1000),
-		// map(render),
 		mergeAll(),
 		// tap(console.log),
 		// map(updateNode),
