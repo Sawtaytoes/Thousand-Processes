@@ -59,33 +59,23 @@ const nodesEpic = (
 		mergeMap(({
 			id,
 		}) => (
-			merge(
-				(
-					// action$
-					render$
-					.pipe(
-						// ofType(UPDATE_NODE),
-						filter(({
-							id: updatedNodeId,
-						}) => (
-							updatedNodeId === id
-						)),
-						mergeMap(() => (
-							timer(
-								getRandomWholeNumber(
-									10000,
-								)
-							)
-						)),
-					)
-				),
-				(
+			// action$
+			render$
+			.pipe(
+				// ofType(UPDATE_NODE),
+				filter(({
+					id: updatedNodeId,
+				}) => (
+					updatedNodeId === id
+				)),
+				startWith(0),
+				mergeMap(() => (
 					timer(
 						getRandomWholeNumber(
 							10000,
 						)
 					)
-				),
+				)),
 			)
 			.pipe(
 				mapTo(id),
