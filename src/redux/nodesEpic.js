@@ -69,7 +69,7 @@ const nodesEpic = (
 					updatedNodeId === id
 				)),
 				startWith(0),
-				mergeMap(() => (
+				switchMap(() => (
 					timer(
 						getRandomWholeNumber(
 							10000,
