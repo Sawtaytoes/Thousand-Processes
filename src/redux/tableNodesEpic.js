@@ -57,10 +57,8 @@ const nodesEpic = (
 		mergeMap(({
 			id,
 		}) => (
-			// action$
 			render$
 			.pipe(
-				// ofType(UPDATE_NODE),
 				filter(({
 					id: updatedNodeId,
 				}) => (
