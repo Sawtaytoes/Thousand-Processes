@@ -34,7 +34,7 @@ export const updateNode = (
 const numberOfColumns = 100
 
 const initialState = (
-	Array(10000)
+	Array(25000)
 	.fill()
 	.map((
 		item,
