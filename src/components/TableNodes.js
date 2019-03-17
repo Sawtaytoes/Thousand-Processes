@@ -12,42 +12,44 @@ const Nodes = ({
 			borderSpacing: 0,
 		}}
 	>
-		{
-			nodes
-			.reduce(
-				(
-					nodeGroups,
-					node,
-				) => {
-					!nodeGroups[node.y]
-					&& (nodeGroups[node.y] = [])
+		<tbody>
+			{
+				nodes
+				.reduce(
+					(
+						nodeGroups,
+						node,
+					) => {
+						!nodeGroups[node.y]
+						&& (nodeGroups[node.y] = [])
 
-					nodeGroups[node.y]
-					.push(node)
+						nodeGroups[node.y]
+						.push(node)
 
-					return nodeGroups
-				},
-				[],
-			)
-			.map((
-				nodeGroup,
-				index,
-			) => (
-				<tr key={index}>
-					{
-						nodeGroup
-						.map(({
-							id,
-						}) => (
-							<TableNode
-								id={id}
-								key={id}
-							/>
-						))
-					}
-				</tr>
-			))
-		}
+						return nodeGroups
+					},
+					[],
+				)
+				.map((
+					nodeGroup,
+					index,
+				) => (
+					<tr key={index}>
+						{
+							nodeGroup
+							.map(({
+								id,
+							}) => (
+								<TableNode
+									id={id}
+									key={id}
+								/>
+							))
+						}
+					</tr>
+				))
+			}
+		</tbody>
 	</table>
 )
 
