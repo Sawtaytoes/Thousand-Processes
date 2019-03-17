@@ -1,4 +1,4 @@
-import { ignoreElements, mapTo, mergeMap, pluck, switchMap, take, tap } from 'rxjs/operators'
+import { delay, ignoreElements, mapTo, mergeMap, pluck, switchMap, take, tap } from 'rxjs/operators'
 import { timer } from 'rxjs'
 
 import getRandomWholeNumber from './getRandomWholeNumber'
@@ -93,14 +93,7 @@ const vanillaJsEpic = (
 	state$
 	.pipe(
 		take(1),
-		switchMap((
-			nodes,
-		) => (
-			timer(1000)
-			.pipe(
-				mapTo(nodes),
-			)
-		)),
+		delay(1000),
 		mergeMap(({
 			nodes,
 		}) => (
