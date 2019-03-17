@@ -32,7 +32,10 @@ const getRandomValue = () => (
 	)
 )
 
-let queue = []
+const queue1 = []
+const queue2 = []
+
+let queue = queue1
 
 const renderCell = (
 	id,
@@ -50,7 +53,19 @@ const renderCell = (
 
 setInterval(
 	() => {
-		for (const id of queue) {
+		queue = (
+			queue1.length > 0
+			? queue2
+			: queue1
+		)
+
+		const tempQueue = (
+			queue1.length > 0
+			? queue1
+			: queue2
+		)
+
+		for (const id of tempQueue) {
 			const cell = (
 				document
 				.getElementById(`cell-${id}`)
@@ -62,7 +77,11 @@ setInterval(
 			renderCell(id)
 		}
 
-		queue = []
+		tempQueue
+		.splice(
+			0,
+			tempQueue.length,
+		)
 	},
 	40,
 )
