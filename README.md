@@ -1,3 +1,8 @@
+# Thousand Processes
+The goal of this project is to be able to process 10K updates in the DOM without dropping any updates.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
