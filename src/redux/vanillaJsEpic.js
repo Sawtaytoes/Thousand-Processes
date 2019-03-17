@@ -1,5 +1,4 @@
 import { delay, ignoreElements, mapTo, mergeMap, pluck, switchMap, take, tap } from 'rxjs/operators'
-import { timer } from 'rxjs'
 
 import getRandomWholeNumber from './getRandomWholeNumber'
 
