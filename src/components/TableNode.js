@@ -1,24 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Node = ({
+const TableNode = ({
 	color,
 	id,
 	value,
-	x,
-	y,
 }) => (
-	<div
+	<td
 		id={`cell-${id}`}
 		style={{
+			padding: 0,
+			margin: 0,
+			lineHeight: '0.8em',
 			color,
-			left: `${x}ch`,
-			position: 'absolute',
-			top: `${y}em`,
 		}}
 	>
 		{value}
-	</div>
+	</td>
 )
 
 export default (
@@ -30,6 +28,6 @@ export default (
 			nodes[id]
 		)
 	)(
-		Node,
+		TableNode,
 	)
 )
