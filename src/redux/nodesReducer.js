@@ -1,5 +1,5 @@
-import createReducer from './createReducer'
-import getRandomWholeNumber from './getRandomWholeNumber'
+import createReducer from '../../utils/createReducer'
+import getRandomWholeNumber from '../../utils/getRandomWholeNumber'
 
 const getRandomColor = () => (
 	'rgb'

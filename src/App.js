@@ -1,11 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
-// import { Provider } from 'react-redux'
-// import store from './redux/store'
-
 import ReactChildren from './components/ReactChildren'
 import ReactParent from './components/ReactParent'
+import ReactRedux from './components/ReactRedux'
 import './App.css'
 import './global.css'
 
@@ -50,6 +48,11 @@ const App = () => (
 				<Route
 					component={ReactChildren}
 					path="/react-children"
+				/>
+
+				<Route
+					component={ReactRedux}
+					path="/react-redux"
 				/>
 			</div>
 		</div>
