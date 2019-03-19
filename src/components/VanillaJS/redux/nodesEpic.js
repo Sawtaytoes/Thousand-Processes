@@ -1,77 +1,129 @@
-import { bufferTime, delay, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil, tap } from 'rxjs/operators'
+import { delay, ignoreElements, mapTo, mergeMap, switchMap, tap } from 'rxjs/operators'
+import { merge, of } from 'rxjs'
 import { ofType } from 'redux-observable'
-import { of, Subject } from 'rxjs'
 
 import getRandomColor from '../../../utils/getRandomColor'
 import getRandomTimeout from '../../../utils/getRandomTimeout'
 import getRandomValue from '../../../utils/getRandomValue'
 import { RESET_NODES, START_PROCESSING } from './actions'
 
-const render$ = new Subject()
+const queue1 = []
+const queue2 = []
+const timeoutIds = {}
+
+let queue = queue1
+
+const clearQueue = (
+	queue,
+) => {
+	queue
+	.splice(
+		0,
+		queue.length,
+	)
+}
+
+const renderCell = (
+	id,
+) => (
+	setTimeout(
+		() => {
+			queue
+			.push(id)
+		},
+		getRandomTimeout(),
+	)
+)
+
+let intervalId
+
+const createInterval = () => (
+	setInterval(
+		() => {
+			queue = (
+				queue1.length > 0
+				? queue2
+				: queue1
+			)
+
+			const tempQueue = (
+				queue1.length > 0
+				? queue1
+				: queue2
+			)
+
+			for (const id of tempQueue) {
+				const cell = (
+					document
+					.getElementById(`cell-${id}`)
+				)
+
+				if (!cell) {
+					continue
+				}
+
+				cell.innerHTML = getRandomValue()
+				cell.style.color = getRandomColor()
+
+				timeoutIds[id] = renderCell(id)
+			}
+
+			clearQueue(tempQueue)
+		},
+		40,
+	)
+)
 
 const nodesEpic = (
 	action$,
 	state$,
 ) => (
-	action$
-	.pipe(
-		ofType(START_PROCESSING),
-		delay(0),
-		switchMap(() => (
-			of(state$.value)
+	merge(
+		(
+			action$
 			.pipe(
-				mergeMap(({
-					nodes,
-				}) => (
-					nodes
-				)),
-				mergeMap(({
-					id,
-				}) => (
-					render$
-					.pipe(
-						filter(({
-							id: updatedNodeId,
-						}) => (
-							updatedNodeId === id
-						)),
-						startWith(0),
-						delay(getRandomTimeout()),
-					)
-					.pipe(
-						mapTo(id),
-					)
-				)),
-				bufferTime(40),
-				filter((
-					ids,
-				) => (
-					ids
-					.length > 0
-				)),
-				mergeAll(),
-				takeUntil(
-					action$
-					.pipe(
-						ofType(RESET_NODES),
-					)
-				),
-				tap((
-					id,
-				) => {
-					const cell = (
-						document
-						.getElementById(`cell-${id}`)
-					)
-
-					cell.innerHTML = getRandomValue()
-					cell.style.color = getRandomColor()
-
-					render$
-					.next({ id })
+				ofType(RESET_NODES),
+				tap(() => {
+					clearInterval(intervalId)
+				}),
+				tap(() => {
+					Object
+					.values(timeoutIds)
+					.forEach(clearTimeout)
+				}),
+				tap(() => {
+					clearQueue(queue1)
+					clearQueue(queue2)
 				}),
 			)
-		)),
+		),
+		(
+			action$
+			.pipe(
+				ofType(START_PROCESSING),
+				delay(0),
+				tap(() => {
+					intervalId = createInterval()
+				}),
+				switchMap(() => (
+					of(state$.value)
+					.pipe(
+						mergeMap(({
+							nodes,
+						}) => (
+							nodes
+						)),
+						tap(({
+							id,
+						}) => {
+							timeoutIds[id] = renderCell(id)
+						}),
+					)
+				)),
+			)
+		),
+	)
+	.pipe(
 		ignoreElements(),
 	)
 )

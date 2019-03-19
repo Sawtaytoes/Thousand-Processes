@@ -7,7 +7,7 @@ import store from './redux/store'
 const VanillaJS = () => (
 	<div>
 		<p>
-			{"Render updates from the RxJS."}
+			{"Render updates from `setTimeout` and `setInterval` only."}
 		</p>
 
 		<div style={{ position: 'relative' }}>
