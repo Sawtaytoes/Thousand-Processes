@@ -2,20 +2,38 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import Nodes from './Nodes'
-import { resetNodes, startProcessing } from './redux/actions'
+import { resetNodes, resetQueue } from './redux/actions'
 
 class ResetState extends PureComponent {
-	componentDidMount() {
-		const { dispatch } = this.props
-
-		dispatch(startProcessing())
-	}
+	// componentDidMount() {
+	// 	setInterval(
+	// 		this.updateNodes,
+	// 		40,
+	// 	)
+	// }
 
 	componentWillUnmount() {
+		// clearInterval(
+		// 	this
+		// 	.intervalId
+		// )
+
 		const { dispatch } = this.props
 
 		dispatch(resetNodes())
 	}
+
+	// updateNodes = () => {
+	// 	const {
+	// 		dispatch,
+	// 		queue,
+	// 	} = this.props
+
+	// 	dispatch(resetQueue())
+
+	// 	queue
+	// 	.forEach(dispatch)
+	// }
 
 	render() {
 		return (
@@ -25,7 +43,11 @@ class ResetState extends PureComponent {
 }
 
 export default (
-	connect()(
+	connect(({
+		queue,
+	}) => ({
+		queue,
+	}))(
 		ResetState,
 	)
 )
