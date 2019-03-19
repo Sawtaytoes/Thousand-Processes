@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import Nodes from './Nodes'
-import { resetNodes, resetQueue } from './redux/actions'
+import { resetNodes } from './redux/actions'
 
 class ResetState extends PureComponent {
 	componentWillUnmount() {
