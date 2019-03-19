@@ -7,7 +7,7 @@ import store from './redux/store'
 const ReactRedux = () => (
 	<div>
 		<p>
-			{"Render updates from the Redux state."}
+			{"Render updates from the RxJS."}
 		</p>
 
 		<div style={{ position: 'relative' }}>

@@ -5,7 +5,7 @@ import { RESET_NODES, UPDATE_NODE } from './actions'
 const initialState = generateNodes(1500)
 
 const reducerActions = {
-	[RESET_NODES]: (
+	[RESET_NODES]: () => (
 		initialState
 	),
 	[UPDATE_NODE]: (

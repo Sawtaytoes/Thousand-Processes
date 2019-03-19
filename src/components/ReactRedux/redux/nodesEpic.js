@@ -1,50 +1,67 @@
-import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, startWith, switchMap, take } from 'rxjs/operators'
+import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { timer } from 'rxjs'
+import { of, timer } from 'rxjs'
 
 import getRandomWholeNumber from '../../../utils/getRandomWholeNumber'
-import { UPDATE_NODE, updateNode } from './actions'
+import { RESET_NODES, START_PROCESSING, UPDATE_NODE, updateNode } from './actions'
 
 const nodesEpic = (
 	action$,
 	state$,
 ) => (
-	state$
+	action$
 	.pipe(
-		take(1),
-		delay(1000),
-		mergeMap(({
-			nodes,
-		}) => (
-			nodes
-		)),
-		mergeMap(({
-			id,
-		}) => (
-			action$
+		ofType(START_PROCESSING),
+		delay(0),
+		switchMap(() => (
+			of(state$.value)
 			.pipe(
-				ofType(UPDATE_NODE),
-				filter(({
-					id: updatedNodeId,
+				mergeMap(({
+					nodes,
 				}) => (
-					updatedNodeId === id
+					nodes
 				)),
-				startWith(0),
-				switchMap(() => (
-					timer(
-						getRandomWholeNumber(
-							10000,
-						)
+				mergeMap(({
+					id,
+				}) => (
+					action$
+					.pipe(
+						ofType(UPDATE_NODE),
+						filter(({
+							id: updatedNodeId,
+						}) => (
+							updatedNodeId === id
+						)),
+						startWith(0),
+						switchMap(() => (
+							timer(
+								getRandomWholeNumber(
+									10000,
+								)
+							)
+						)),
+					)
+					.pipe(
+						mapTo(id),
 					)
 				)),
-			)
-			.pipe(
-				mapTo(id),
+				bufferTime(40),
+				filter((
+					ids,
+				) => (
+					ids
+					.length > 0
+				)),
+				mergeAll(),
+				takeUntil(
+					action$
+					.pipe(
+						ofType(RESET_NODES),
+					)
+				),
+				map(updateNode),
 			)
 		)),
-		bufferTime(40),
-		mergeAll(),
-		map(updateNode),
 	)
 )
 

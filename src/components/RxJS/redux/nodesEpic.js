@@ -1,11 +1,11 @@
-import { bufferTime, delay, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { bufferTime, delay, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil, tap } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { Subject, timer } from 'rxjs'
+import { of, Subject, timer } from 'rxjs'
 
 import getRandomColor from '../../../utils/getRandomColor'
 import getRandomValue from '../../../utils/getRandomValue'
 import getRandomWholeNumber from '../../../utils/getRandomWholeNumber'
-import { RESET_NODES } from './actions'
+import { RESET_NODES, START_PROCESSING } from './actions'
 
 const render$ = new Subject()
 
@@ -13,67 +13,71 @@ const nodesEpic = (
 	action$,
 	state$,
 ) => (
-	state$
+	action$
 	.pipe(
-		take(1),
-		delay(1000),
-		mergeMap(({
-			nodes,
-		}) => (
-			nodes
-		)),
-		mergeMap(({
-			id,
-		}) => (
-			render$
+		ofType(START_PROCESSING),
+		delay(0),
+		switchMap(() => (
+			of(state$.value)
 			.pipe(
-				filter(({
-					id: updatedNodeId,
+				mergeMap(({
+					nodes,
 				}) => (
-					updatedNodeId === id
+					nodes
 				)),
-				startWith(0),
-				switchMap(() => (
-					timer(
-						getRandomWholeNumber(
-							10000,
-						)
+				mergeMap(({
+					id,
+				}) => (
+					render$
+					.pipe(
+						filter(({
+							id: updatedNodeId,
+						}) => (
+							updatedNodeId === id
+						)),
+						startWith(0),
+						switchMap(() => (
+							timer(
+								getRandomWholeNumber(
+									10000,
+								)
+							)
+						)),
+					)
+					.pipe(
+						mapTo(id),
 					)
 				)),
-			)
-			.pipe(
-				mapTo(id),
+				bufferTime(40),
+				filter((
+					ids,
+				) => (
+					ids
+					.length > 0
+				)),
+				mergeAll(),
+				takeUntil(
+					action$
+					.pipe(
+						ofType(RESET_NODES),
+					)
+				),
+				tap((
+					id,
+				) => {
+					const cell = (
+						document
+						.getElementById(`cell-${id}`)
+					)
+
+					cell.innerHTML = getRandomValue()
+					cell.style.color = getRandomColor()
+
+					render$
+					.next({ id })
+				}),
 			)
 		)),
-		bufferTime(40),
-		filter((
-			ids,
-		) => (
-			ids
-			.length > 0
-		)),
-		mergeAll(),
-		takeUntil(
-			action$
-			.pipe(
-				ofType(RESET_NODES),
-				tap(console.log),
-			)
-		),
-		tap((
-			id,
-		) => {
-			const cell = (
-				document
-				.getElementById(`cell-${id}`)
-			)
-
-			cell.innerHTML = getRandomValue()
-			cell.style.color = getRandomColor()
-
-			render$
-			.next({ id })
-		}),
 		ignoreElements(),
 	)
 )
