@@ -11,11 +11,11 @@ const ReactRedux = () => (
 		</p>
 
 		<div style={{ position: 'relative' }}>
-			<Provider store={store}>
-				<ConcurrentMode>
+			<ConcurrentMode>
+				<Provider store={store}>
 					<Nodes />
-				</ConcurrentMode>
-			</Provider>
+				</Provider>
+			</ConcurrentMode>
 		</div>
 	</div>
 )
