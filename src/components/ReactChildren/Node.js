@@ -26,6 +26,7 @@ class Node extends Component {
 	}
 
 	componentWillUnmount() {
+		this.unmounted = true
 		this.stopListener()
 	}
 
@@ -37,6 +38,9 @@ class Node extends Component {
 	}
 
 	queueUpdate = () => {
+		this
+		.stopListener()
+
 		this
 		.timeoutId = (
 			setTimeout(
@@ -59,6 +63,10 @@ class Node extends Component {
 	}
 
 	updateState = () => {
+		if (this.unmounted) {
+			return
+		}
+
 		this
 		.setState({
 			...this.state,

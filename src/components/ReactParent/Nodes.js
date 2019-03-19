@@ -24,9 +24,19 @@ class Nodes extends Component {
 	}
 
 	componentDidMount() {
-		setInterval(
-			this.updateNodes,
-			40,
+		this
+		.intervalId = (
+			setInterval(
+				this.updateNodes,
+				40,
+			)
+		)
+	}
+
+	componentWillUnmount() {
+		clearInterval(
+			this
+			.intervalId
 		)
 	}
 
