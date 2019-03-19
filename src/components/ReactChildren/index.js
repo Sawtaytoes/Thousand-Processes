@@ -1,11 +1,11 @@
 import React, { unstable_ConcurrentMode as ConcurrentMode } from 'react'
 
-import ReactNodes from './ReactNodes'
+import Nodes from './Nodes'
 
-const ReactTest = () => (
+const ReactChildren = () => (
 	<ConcurrentMode>
-		<ReactNodes />
+		<Nodes />
 	</ConcurrentMode>
 )
 
-export default ReactTest
+export default ReactChildren

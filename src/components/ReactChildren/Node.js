@@ -1,41 +1,23 @@
 import React, { Component } from 'react'
 
+import getRandomColor from '../../utils/getRandomColor'
+import getRandomValue from '../../utils/getRandomValue'
 import getRandomWholeNumber from '../../utils/getRandomWholeNumber'
+import store from './utils/store'
 
-const getRandomColor = () => (
-	'rgb'
-	.concat('(')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(')')
-)
-
-const getRandomValue = () => (
-	getRandomWholeNumber(
-		10,
-	)
-)
-
-class ReactNode extends Component {
+class Node extends Component {
 	constructor(props) {
 		super(props)
 
 		const {
-			color,
-			value,
-			x,
-			y,
+			initialColor,
+			initialValue,
 		} = props
 
 		this
 		.state = {
-			color,
-			value,
-			x,
-			y,
+			color: initialColor,
+			value: initialValue,
 		}
 	}
 
@@ -59,12 +41,12 @@ class ReactNode extends Component {
 		.timeoutId = (
 			setTimeout(
 				() => {
-					this
-					.setState({
-						...this.state,
-						color: getRandomColor(),
-						value: getRandomValue(),
-					})
+					store
+					.queue
+					.push(
+						this
+						.updateState
+					)
 
 					this
 					.queueUpdate()
@@ -76,12 +58,24 @@ class ReactNode extends Component {
 		)
 	}
 
+	updateState = () => {
+		this
+		.setState({
+			...this.state,
+			color: getRandomColor(),
+			value: getRandomValue(),
+		})
+	}
+
 	render() {
+		const {
+			x,
+			y,
+		} = this.props
+
 		const {
 			color,
 			value,
-			x,
-			y,
 		} = this.state
 
 		return (
@@ -99,4 +93,4 @@ class ReactNode extends Component {
 	}
 }
 
-export default ReactNode
+export default Node

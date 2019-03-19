@@ -1,13 +1,13 @@
-import React, { unstable_ConcurrentMode as ConcurrentMode } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
-// import { Provider } from 'react-redux'
 
-// import Nodes from './components/Nodes'
-import ReactTest from './components/ReactTest'
+// import { Provider } from 'react-redux'
 // import store from './redux/store'
-// import TableNodes from './components/TableNodes'
-import './global.css'
+
+import ReactChildren from './components/ReactChildren'
+import ReactParent from './components/ReactParent'
 import './App.css'
+import './global.css'
 
 const App = () => (
 	<Router>
@@ -17,9 +17,17 @@ const App = () => (
 					<li className="App_navigationItem">
 						<Link
 							className="App_navigationLink"
-							to="/react"
+							to="/react-children"
 						>
-							React
+							React Children
+						</Link>
+					</li>
+					<li className="App_navigationItem">
+						<Link
+							className="App_navigationLink"
+							to="/react-parent"
+						>
+							React Parent
 						</Link>
 					</li>
 					<li className="App_navigationItem">
@@ -35,8 +43,13 @@ const App = () => (
 
 			<div className="App_codeView">
 				<Route
-					component={ReactTest}
-					path="/react"
+					component={ReactParent}
+					path="/react-parent"
+				/>
+
+				<Route
+					component={ReactChildren}
+					path="/react-children"
 				/>
 			</div>
 		</div>
