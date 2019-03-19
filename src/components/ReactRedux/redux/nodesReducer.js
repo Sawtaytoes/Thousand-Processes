@@ -11,19 +11,29 @@ const reducerActions = {
 			id,
 			updatedValues,
 		},
-	) => (
-		nodes
-		.map((
-			node,
-		) => (
-			node.id === id
-			? {
-				...node,
+	) => {
+		const nodeIndex = (
+			nodes
+			.findIndex(({
+				id: nodeId,
+			}) => (
+				nodeId === id
+			))
+		)
+
+		return (
+			nodes
+			.slice(0, nodeIndex)
+			.concat({
+				...nodes[nodeIndex],
 				...updatedValues,
-			}
-			: node
-		))
-	),
+			})
+			.concat(
+				nodes
+				.slice(nodeIndex + 1)
+			)
+		)
+	},
 }
 
 const nodesReducer = (
