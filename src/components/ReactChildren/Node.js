@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 import getRandomColor from '../../utils/getRandomColor'
+import getRandomTimeout from '../../utils/getRandomTimeout'
 import getRandomValue from '../../utils/getRandomValue'
-import getRandomWholeNumber from '../../utils/getRandomWholeNumber'
 import store from './utils/store'
 
 class Node extends Component {
@@ -55,9 +55,7 @@ class Node extends Component {
 					this
 					.queueUpdate()
 				},
-				getRandomWholeNumber(
-					10000,
-				)
+				getRandomTimeout(),
 			)
 		)
 	}

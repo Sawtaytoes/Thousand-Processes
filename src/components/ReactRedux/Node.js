@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import getRandomWholeNumber from '../../utils/getRandomWholeNumber'
+import getRandomTimeout from '../../utils/getRandomTimeout'
 import { queueAction, updateNode } from './redux/actions'
 
 // THESE QUEUES NEED TO OCCUR AT 40ms INTERVALS
@@ -33,14 +33,12 @@ class Node extends Component {
 			setTimeout(
 				() => {
 					dispatch(
-						// queueAction(
+						queueAction(
 							updateNode(id)
-						// )
+						)
 					)
 				},
-				getRandomWholeNumber(
-					10000,
-				),
+				getRandomTimeout(),
 			)
 		)
 	}

@@ -5,35 +5,40 @@ import Nodes from './Nodes'
 import { resetNodes, resetQueue } from './redux/actions'
 
 class ResetState extends PureComponent {
-	// componentDidMount() {
-	// 	setInterval(
-	// 		this.updateNodes,
-	// 		40,
-	// 	)
-	// }
+	componentDidMount() {
+		setInterval(
+			this.updateNodes,
+			40,
+		)
+	}
 
 	componentWillUnmount() {
-		// clearInterval(
-		// 	this
-		// 	.intervalId
-		// )
+		clearInterval(
+			this
+			.intervalId
+		)
 
 		const { dispatch } = this.props
 
 		dispatch(resetNodes())
 	}
 
-	// updateNodes = () => {
-	// 	const {
-	// 		dispatch,
-	// 		queue,
-	// 	} = this.props
+	updateNodes = () => {
+		const {
+			dispatch,
+			queue,
+		} = this.props
 
-	// 	dispatch(resetQueue())
-
-	// 	queue
-	// 	.forEach(dispatch)
-	// }
+		queue
+		.length > 0
+		&& (
+			dispatch(resetQueue())
+		)
+		&& (
+			queue
+			.forEach(dispatch)
+		)
+	}
 
 	render() {
 		return (

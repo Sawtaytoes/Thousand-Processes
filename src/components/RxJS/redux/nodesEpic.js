@@ -1,10 +1,10 @@
 import { bufferTime, delay, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil, tap } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { of, Subject, timer } from 'rxjs'
+import { of, Subject } from 'rxjs'
 
 import getRandomColor from '../../../utils/getRandomColor'
+import getRandomTimeout from '../../../utils/getRandomTimeout'
 import getRandomValue from '../../../utils/getRandomValue'
-import getRandomWholeNumber from '../../../utils/getRandomWholeNumber'
 import { RESET_NODES, START_PROCESSING } from './actions'
 
 const render$ = new Subject()
@@ -36,13 +36,7 @@ const nodesEpic = (
 							updatedNodeId === id
 						)),
 						startWith(0),
-						switchMap(() => (
-							timer(
-								getRandomWholeNumber(
-									10000,
-								)
-							)
-						)),
+						delay(getRandomTimeout()),
 					)
 					.pipe(
 						mapTo(id),

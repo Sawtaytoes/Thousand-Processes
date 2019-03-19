@@ -1,8 +1,8 @@
 import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { of, timer } from 'rxjs'
+import { of } from 'rxjs'
 
-import getRandomWholeNumber from '../../../utils/getRandomWholeNumber'
+import getRandomTimeout from '../../../utils/getRandomTimeout'
 import { RESET_NODES, START_PROCESSING, UPDATE_NODE, updateNode } from './actions'
 
 const nodesEpic = (
@@ -33,13 +33,7 @@ const nodesEpic = (
 							updatedNodeId === id
 						)),
 						startWith(0),
-						switchMap(() => (
-							timer(
-								getRandomWholeNumber(
-									10000,
-								)
-							)
-						)),
+						delay(getRandomTimeout()),
 					)
 					.pipe(
 						mapTo(id),
