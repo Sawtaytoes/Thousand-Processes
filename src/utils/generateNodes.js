@@ -11,7 +11,7 @@ const generateNodes = (
 	) => ({
 		color: 'black',
 		id: index,
-		value: '0',
+		value: 'F',
 		x: index % numberOfColumns,
 		y: Math.floor(index / numberOfColumns),
 	}))
