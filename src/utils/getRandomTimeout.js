@@ -1,10 +1,13 @@
 import getRandomWholeNumber from './getRandomWholeNumber'
 
 const getRandomTimeout = () => (
-	getRandomWholeNumber(
-		9000,
+	Math
+	.max(
+		getRandomWholeNumber(
+			10000,
+		),
+		1000,
 	)
-	+ 1000
 )
 
 export default getRandomTimeout
