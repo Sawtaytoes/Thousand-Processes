@@ -1,10 +1,36 @@
-body {
-	background-color: #ccc;
+.App {
+	font-family: monospace;
+	font-size: 12px;
+	height: 100vh;
+	width: 100vw;
 }
 
-.App {
-  font-family: monospace;
-  font-size: 12px;
+.App_codeView {
+	position: relative;
+}
+
+.App_navigationItem {
+	padding: 20px;
+}
+
+.App_navigationItem:first-child {
+	padding-left: 40px;
+}
+
+.App_navigationItem:last-child {
+	padding-right: 40px;
+}
+
+.App_navigationLink {
+	text-decoration: none;
+}
+
+.App_navigationList {
+	display: flex;
+	font-size: 20px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
 .TableNode {
