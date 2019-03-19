@@ -2,7 +2,7 @@ import createReducer from '../../../utils/createReducer'
 import generateNodes from '../../../utils/generateNodes'
 import { UPDATE_NODE } from './actions'
 
-const initialState = generateNodes(500)
+const initialState = generateNodes(1500)
 
 const reducerActions = {
 	[UPDATE_NODE]: (
