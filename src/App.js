@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import ReactChildren from './components/ReactChildren'
 import ReactParent from './components/ReactParent'
 import ReactRedux from './components/ReactRedux'
+import RxJS from './components/RxJS'
 import './App.css'
 import './global.css'
 
@@ -36,6 +37,14 @@ const App = () => (
 							React-Redux
 						</Link>
 					</li>
+					<li className="App_navigationItem">
+						<Link
+							className="App_navigationLink"
+							to="/rxjs"
+						>
+							RxJS
+						</Link>
+					</li>
 				</ul>
 			</nav>
 
@@ -53,6 +62,11 @@ const App = () => (
 				<Route
 					component={ReactRedux}
 					path="/react-redux"
+				/>
+
+				<Route
+					component={RxJS}
+					path="/rxjs"
 				/>
 			</div>
 		</div>

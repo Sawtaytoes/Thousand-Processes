@@ -1,36 +1,11 @@
-import { bufferTime, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, take, tap } from 'rxjs/operators'
+import { bufferTime, delay, filter, ignoreElements, mapTo, mergeAll, mergeMap, startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators'
+import { ofType } from 'redux-observable'
 import { Subject, timer } from 'rxjs'
 
-import getRandomWholeNumber from './getRandomWholeNumber'
-
-// const colors = [
-// 	'#000',
-// 	'#00f',
-// 	'#0f0',
-// 	'#0ff',
-// 	'#f00',
-// 	'#f0f',
-// 	'#ff0',
-// 	'#fff',
-// ]
-
-const getRandomColor = () => (
-	'rgb'
-	.concat('(')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(',')
-	.concat(getRandomWholeNumber() * 256)
-	.concat(')')
-	// colors[getRandomWholeNumber(8)]
-)
-
-const getRandomValue = () => (
-	getRandomWholeNumber(
-		10,
-	)
-)
+import getRandomColor from '../../../utils/getRandomColor'
+import getRandomValue from '../../../utils/getRandomValue'
+import getRandomWholeNumber from '../../../utils/getRandomWholeNumber'
+import { RESET_NODES } from './actions'
 
 const render$ = new Subject()
 
@@ -41,14 +16,7 @@ const nodesEpic = (
 	state$
 	.pipe(
 		take(1),
-		switchMap((
-			nodes,
-		) => (
-			timer(1000)
-			.pipe(
-				mapTo(nodes),
-			)
-		)),
+		delay(1000),
 		mergeMap(({
 			nodes,
 		}) => (
@@ -78,8 +46,23 @@ const nodesEpic = (
 			)
 		)),
 		bufferTime(40),
+		filter((
+			ids,
+		) => (
+			ids
+			.length > 0
+		)),
 		mergeAll(),
-		tap(id => {
+		takeUntil(
+			action$
+			.pipe(
+				ofType(RESET_NODES),
+				tap(console.log),
+			)
+		),
+		tap((
+			id,
+		) => {
 			const cell = (
 				document
 				.getElementById(`cell-${id}`)

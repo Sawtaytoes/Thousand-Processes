@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import TableNode from './TableNode'
+import Node from './Node'
 
 const Nodes = ({
 	nodes,
@@ -40,7 +40,7 @@ const Nodes = ({
 							.map(({
 								id,
 							}) => (
-								<TableNode
+								<Node
 									id={id}
 									key={id}
 								/>

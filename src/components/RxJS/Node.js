@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const TableNode = ({
+import './Node.css'
+
+const Node = ({
 	id,
 	value,
 }) => (
 	<td
-		className="TableNode"
+		className="Node"
 		id={`cell-${id}`}
 	>
 		{value}
@@ -22,6 +24,6 @@ export default (
 			nodes[id]
 		)
 	)(
-		TableNode,
+		Node,
 	)
 )
