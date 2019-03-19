@@ -1,4 +1,4 @@
-import { delay, ignoreElements, mapTo, mergeMap, switchMap, tap } from 'rxjs/operators'
+import { delay, ignoreElements, mergeMap, switchMap, tap } from 'rxjs/operators'
 import { merge, of } from 'rxjs'
 import { ofType } from 'redux-observable'
 
@@ -9,8 +9,8 @@ import { RESET_NODES, START_PROCESSING } from './actions'
 
 const queue1 = []
 const queue2 = []
-const timeoutIds = {}
 
+let timeoutIds = {}
 let queue = queue1
 
 const clearQueue = (
@@ -85,13 +85,13 @@ const nodesEpic = (
 				ofType(RESET_NODES),
 				tap(() => {
 					clearInterval(intervalId)
-				}),
-				tap(() => {
+
 					Object
 					.values(timeoutIds)
 					.forEach(clearTimeout)
-				}),
-				tap(() => {
+
+					timeoutIds = {}
+
 					clearQueue(queue1)
 					clearQueue(queue2)
 				}),

@@ -1,18 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import './Node.css'
-
 const Node = ({
+	color,
 	id,
 	value,
+	x,
+	y,
 }) => (
-	<td
-		className="Node"
+	<div
 		id={`cell-${id}`}
+		style={{
+			color,
+			left: `${x}ch`,
+			position: 'absolute',
+			top: `${y}em`,
+		}}
 	>
 		{value}
-	</td>
+	</div>
 )
 
 export default (
