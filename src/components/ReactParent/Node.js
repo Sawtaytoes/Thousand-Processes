@@ -5,15 +5,18 @@ import store from './utils/store'
 
 class Node extends Component {
 	componentDidMount() {
-		this.queueUpdate()
+		this
+		.queueUpdate()
 	}
 
 	componentDidUpdate() {
-		this.queueUpdate()
+		this
+		.queueUpdate()
 	}
 
 	componentWillUnmount() {
-		this.stopListener()
+		this
+		.stopListener()
 	}
 
 	shouldComponentUpdate({
