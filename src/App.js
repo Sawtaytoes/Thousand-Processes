@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 import ReactChildren from './components/ReactChildren'
+import ReactChildrenConcurrent from './components/ReactChildrenConcurrent'
 import ReactParent from './components/ReactParent'
 import ReactRedux from './components/ReactRedux'
 import ReactReduxCheat from './components/ReactReduxCheat'
@@ -22,6 +23,14 @@ const App = () => (
 							to="/react-children"
 						>
 							React Children
+						</Link>
+					</li>
+					<li className="App_navigationItem">
+						<Link
+							className="App_navigationLink"
+							to="/react-children-concurrent"
+						>
+							React Children Concurrent
 						</Link>
 					</li>
 					<li className="App_navigationItem">
@@ -77,13 +86,18 @@ const App = () => (
 
 			<div className="App_codeView">
 				<Route
-					component={ReactParent}
-					path="/react-parent"
+					component={ReactChildren}
+					path="/react-children"
 				/>
 
 				<Route
-					component={ReactChildren}
-					path="/react-children"
+					component={ReactChildrenConcurrent}
+					path="/react-children-concurrent"
+				/>
+
+				<Route
+					component={ReactParent}
+					path="/react-parent"
 				/>
 
 				<Route

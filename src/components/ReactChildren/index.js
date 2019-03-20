@@ -1,4 +1,4 @@
-import React, { unstable_ConcurrentMode as ConcurrentMode } from 'react'
+import React from 'react'
 
 import Nodes from './Nodes'
 
@@ -9,9 +9,7 @@ const ReactChildren = () => (
 		</p>
 
 		<div style={{ position: 'relative' }}>
-			<ConcurrentMode>
-				<Nodes />
-			</ConcurrentMode>
+			<Nodes />
 		</div>
 	</div>
 )
