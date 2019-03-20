@@ -32,11 +32,11 @@ class ResetState extends PureComponent {
 		queue
 		.length > 0
 		&& (
-			dispatch(resetQueue())
-		)
-		&& (
 			queue
 			.forEach(dispatch)
+		)
+		&& (
+			dispatch(resetQueue())
 		)
 	}
 
