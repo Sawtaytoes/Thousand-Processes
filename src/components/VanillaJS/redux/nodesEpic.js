@@ -23,7 +23,7 @@ const clearQueue = (
 	)
 }
 
-const renderCell = (
+const renderNode = (
 	id,
 ) => (
 	setTimeout(
@@ -53,19 +53,19 @@ const createInterval = () => (
 			)
 
 			for (const id of tempQueue) {
-				const cell = (
+				const node = (
 					document
-					.getElementById(`cell-${id}`)
+					.getElementById(`node-${id}`)
 				)
 
-				if (!cell) {
+				if (!node) {
 					continue
 				}
 
-				cell.innerHTML = getRandomValue()
-				cell.style.color = getRandomColor()
+				node.innerHTML = getRandomValue()
+				node.style.color = getRandomColor()
 
-				timeoutIds[id] = renderCell(id)
+				timeoutIds[id] = renderNode(id)
 			}
 
 			clearQueue(tempQueue)
@@ -116,7 +116,7 @@ const nodesEpic = (
 						tap(({
 							id,
 						}) => {
-							timeoutIds[id] = renderCell(id)
+							timeoutIds[id] = renderNode(id)
 						}),
 					)
 				)),

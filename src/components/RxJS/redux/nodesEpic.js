@@ -59,13 +59,13 @@ const nodesEpic = (
 				tap((
 					id,
 				) => {
-					const cell = (
+					const node = (
 						document
-						.getElementById(`cell-${id}`)
+						.getElementById(`node-${id}`)
 					)
 
-					cell.innerHTML = getRandomValue()
-					cell.style.color = getRandomColor()
+					node.innerHTML = getRandomValue()
+					node.style.color = getRandomColor()
 
 					render$
 					.next({ id })

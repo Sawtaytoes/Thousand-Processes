@@ -9,7 +9,7 @@ const Node = ({
 	y,
 }) => (
 	<div
-		id={`cell-${id}`}
+		id={`node-${id}`}
 		style={{
 			color,
 			left: `${x}ch`,
