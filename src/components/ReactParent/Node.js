@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import getRandomTimeout from '../../utils/getRandomTimeout'
 import store from './utils/store'
 
-class ReactNode extends Component {
+class Node extends Component {
 	componentDidMount() {
 		this.queueUpdate()
 	}
@@ -80,4 +80,4 @@ class ReactNode extends Component {
 	}
 }
 
-export default ReactNode
+export default Node
