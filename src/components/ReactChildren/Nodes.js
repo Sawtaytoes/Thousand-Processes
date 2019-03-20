@@ -5,7 +5,7 @@ import Node from './Node'
 import store from './utils/store'
 
 const initialState = {
-	nodes: generateNodes(1000),
+	nodes: generateNodes(500),
 }
 
 class Nodes extends Component {
