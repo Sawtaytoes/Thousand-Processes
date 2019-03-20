@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import getRandomTimeout from '../../utils/getRandomTimeout'
 import { queueAction, updateNode } from './redux/actions'
 
-// THESE QUEUES NEED TO OCCUR AT 40ms INTERVALS
-
 class Node extends Component {
 	componentDidMount() {
 		this.queueUpdate()
