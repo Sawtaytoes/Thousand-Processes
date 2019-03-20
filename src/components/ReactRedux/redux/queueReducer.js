@@ -1,6 +1,6 @@
 import createReducer from '../../../utils/createReducer'
 
-import { RESET_QUEUE, QUEUE_ACTION } from './actions'
+import { QUEUE_ACTION, RESET_QUEUE } from './actions'
 
 const initialState = []
 
