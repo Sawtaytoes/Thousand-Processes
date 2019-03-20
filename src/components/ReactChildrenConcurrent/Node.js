@@ -22,7 +22,13 @@ class Node extends Component {
 	}
 
 	componentDidMount() {
-		this.queueUpdate()
+		this
+		.queueUpdate()
+	}
+
+	componentDidUpdate() {
+		this
+		.queueUpdate()
 	}
 
 	componentWillUnmount() {
@@ -51,9 +57,6 @@ class Node extends Component {
 						this
 						.updateState
 					)
-
-					this
-					.queueUpdate()
 				},
 				getRandomTimeout(),
 			)
