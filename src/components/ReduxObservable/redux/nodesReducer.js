@@ -11,16 +11,16 @@ const reducerActions = {
 	[UPDATE_NODE]: (
 		nodes,
 		{
-			id,
+			id: nodeId,
 			updatedValues,
 		},
 	) => {
 		const nodeIndex = (
 			nodes
 			.findIndex(({
-				id: nodeId,
+				id,
 			}) => (
-				nodeId === id
+				id === nodeId
 			))
 		)
 

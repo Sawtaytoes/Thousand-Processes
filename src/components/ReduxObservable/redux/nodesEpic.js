@@ -1,4 +1,4 @@
-import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators'
+import { bufferTime, delay, filter, map, mapTo, mergeAll, mergeMap, pluck, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
 import { of } from 'rxjs'
 
@@ -16,27 +16,24 @@ const nodesEpic = (
 		switchMap(() => (
 			of(state$.value)
 			.pipe(
+				pluck('nodes'),
+				mergeAll(),
 				mergeMap(({
-					nodes,
-				}) => (
-					nodes
-				)),
-				mergeMap(({
-					id,
+					id: nodeId,
 				}) => (
 					action$
 					.pipe(
 						ofType(UPDATE_NODE),
 						filter(({
-							id: updatedNodeId,
+							id,
 						}) => (
-							updatedNodeId === id
+							id === nodeId
 						)),
 						startWith(0),
 						delay(getRandomTimeout()),
 					)
 					.pipe(
-						mapTo(id),
+						mapTo(nodeId),
 					)
 				)),
 				bufferTime(40),
